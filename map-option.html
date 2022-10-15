@@ -1,0 +1,66 @@
+<html lang="ja" style="height: 100%; margin: 0;">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- LeafletのLibraryをLoadする -->
+    <link rel="stylesheet" href="./node_modules/leaflet/dist/leaflet.css" />
+    <script src="./node_modules/leaflet/dist/leaflet.js"></script>
+
+    <title>Leaflet-Option</title>
+</head>
+
+<!-- Leafletを全面表示で設定する -->
+<body style="height: 100%; margin: 0; overflow: hidden;">
+    <div id="map" style="height: 100%; width:100%;" ></div>
+</body>
+
+<script>
+
+    // [ Leaflet の Optionまとめ ]
+
+    const map = L.map('map', {
+
+        // [ 10個のOption設定 ]
+
+        // 1. Defaultが「true」な optionたちをfalseにして制限をかける！
+
+        zoom:3, // Zoomレベルの設定
+        dragging:true, // マウスまたはタッチのドラッグで、マップを移動するかしないか。
+        touchZoom:true, // クリックまたはタッチで、マップをズームするかしないか。
+        scrollWheelZoom:false, // マウスのホイール操作で 、マップをズームするかしないか。
+        doubleClickZoom:true, // ダブルクリックで、マップをズームするかしないか。
+        boxZoom:true, // シフトキーを押しながらマウスをドラッグすることで、マップの表示範囲をズームするかしないか。
+        tap:true, // タップでマップのズーム操作をするかしないか。
+        keyboard:false, // キーボードの矢印又はプラス・マイナスキーでのマップ操作の可否。
+        zoomControl:true, // ズームコントロールの表示、非表示。
+        closePopupOnClick: false, // マップをクリックしたときに、ポップアップを閉じるか閉じないか。
+    })
+    .setView([51.5, -0.09]);
+    // Zoomレベルの設定は、setView()の第二引数でも設定できる！
+
+    // 2. 地図データの読み込み & 設定値を追加
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
+    {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 5, // maxZoom: ズームレベルの最大値を指定します。
+        minZoom: 2,  // minZoom: ズームレベルの最小値を指定します。
+    })
+    .addTo(map);
+
+
+    L.marker([51.5, -0.09]).addTo(map).bindPopup('ロボ玉万歳！！<br> 神聖グンマー帝国、万歳！！');
+
+    L.marker([41.89, 12.48]).addTo(map).bindPopup('イタリア共和国-Robotama');
+
+    L.marker([52.5, 13.4]).addTo(map).bindPopup('ドイツ連邦共和国-Robotama');
+
+
+
+    // [ 参考・引用 ]
+    // 1. Leafletのオプションまとめ【Leaflet導入記その2】
+    // https://waq3-travelog.com/how-to-use-leaflet-and-gsi-map-vol2/
+
+
+</script>
+
+</html>

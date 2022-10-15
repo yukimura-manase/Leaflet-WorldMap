@@ -1,0 +1,76 @@
+<html lang="ja" style="height: 100%; margin: 0;">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- LeafletのLibraryをLoadする -->
+    <link rel="stylesheet" href="./node_modules/leaflet/dist/leaflet.css" />
+    <script src="./node_modules/leaflet/dist/leaflet.js"></script>
+
+    <title>Leaflet-世界地図</title>
+</head>
+
+<!-- Leafletを全面表示で設定する -->
+<body style="height: 100%; margin: 0; overflow: hidden;">
+    <div id="map" style="height: 100%; width:100%;" ></div>
+</body>
+
+<script>
+
+    // [ Leaflet で 世界地図を作成する ]
+
+    // 1. Map-Instanceを作成する => L(Leaflet)の map() で初期値を設定する。
+    const map = L.map('map').setView([51.5, -0.09], 3);
+    // setView([ 緯度, 経度 ], ZoomLevel) で初期のView中心地点を設定
+
+    // [51.5, -0.09] => 指定座標は、イギリス
+    
+
+    // 2. 地図データの読み込み & 設定値を追加
+
+    // 2-1. openstreetmap の地図データを読み込む！
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
+    // Web配信されている地図のURL
+    // => OpenStreetMap や 国土地理院などのMap-Dataを選択することができる！
+
+        // 2-2. 設定値を追加する
+        {   // attribution: 地図の右下の属性表示・内容
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 12, // maxZoom: ズームレベルの最大値を指定します。
+            minZoom: 2,  // minZoom: ズームレベルの最小値を指定します。
+        }
+    ) // 2-3. Map-Instanceに登録する。
+    .addTo(map);
+
+    
+    // 3. marker() & addTo() で指定-Pointに、Markerを追加する！
+    // => marker() を作成して、addTo() で Map-Instanceに登録する。
+    L.marker([51.5, -0.09]).addTo(map).bindPopup('ロボ玉万歳！！<br> 神聖グンマー帝国、万歳！！');
+
+    // 4. bindPopup() でPopupを設定できる！
+
+    L.marker([38.9, -77.01]).addTo(map).bindPopup('アメリカ合衆国-Robotama').openPopup();
+
+    L.marker([38.9, 35.2]).addTo(map).bindPopup('イスラエル国-Robotama');
+
+    L.marker([41.89, 12.48]).addTo(map).bindPopup('イタリア共和国-Robotama');
+
+    L.marker([52.5, 13.4]).addTo(map).bindPopup('ドイツ連邦共和国-Robotama').openPopup();
+
+    // 5. openPopup() でデフォルトで開かれるPopupを指定することができる。
+    L.marker([35.68, 139.69]).addTo(map).bindPopup('日本-Robotama🔥').openPopup();
+
+    // 複数の markerで openPopup()されている場合は、一番最後のPopupが開かれる！
+
+    L.marker([13.75, 100.5]).addTo(map).bindPopup('タイ王国-Robotama');
+
+    L.marker([-41.289, 174.7]).addTo(map).bindPopup('ニュージーランド-Robotama');
+
+
+</script>
+
+</html>
+
+
+
+
+

@@ -1,0 +1,92 @@
+<html lang="ja" style="height: 100%; margin: 0;">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- LeafletのLibraryをLoadする -->
+    <link rel="stylesheet" href="./node_modules/leaflet/dist/leaflet.css" />
+    <script src="./node_modules/leaflet/dist/leaflet.js"></script>
+
+    <title>Leaflet-MarkerEvent</title>
+</head>
+
+<!-- Leafletを全面表示で設定する -->
+<body style="height: 100%; margin: 0; overflow: hidden;">
+    <div id="map" style="height: 100%; width:100%;" ></div>
+</body>
+
+<script>
+
+    // [ Leaflet で Marker-Click-Eventを実装する ]
+
+    // 1. Marker情報を保持するList
+    const markerList = [];
+
+    // 2. Map-Instanceを作成する
+    const map = L.map('map', {
+        doubleClickZoom: false,
+        scrollWheelZoom: false,
+        boxZoom: false,
+        tap: false,
+        keyboard: false, 
+        zoomControl: false,
+    })
+    .setView([51.5, -0.09], 3);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 5, // maxZoom: ズームレベルの最大値を指定します。
+        minZoom: 2,  // minZoom: ズームレベルの最小値を指定します。
+    }).addTo(map);
+
+    // Clickイベントで発火する関数
+    function ClickEvent (e){
+        console.log(`${e.target.name} のCountry-Code = ${e.target.country_code}`);;
+    }
+
+    // 3. Marker-Instanceに対して、.on('click', CallBackFunc) でClickイベントの関数を登録！
+    const japan = L.marker([35.68, 139.69]).addTo(map).on('click', (e) => {
+        ClickEvent(e);
+    });
+
+    // 4. 追加したい値をSetする。
+    japan.country_code = 1;
+    japan.name = '日本';
+
+    console.log({japan});
+
+    markerList.push(japan);
+
+    const britain = L.marker([51.5, -0.09]).addTo(map).on('click', (e) => {
+        ClickEvent(e);
+    });
+
+    britain.country_code = 2;
+    britain.name = 'イギリス';
+
+    const buttonTag = `
+        <button 
+            type="button" 
+            onclick="location.href='https://masanyon.com/'" 
+            style="margin-top: 5px;"
+        >
+            No Change No Life I/O
+        </button>
+    `;
+
+    const america = L.marker([38.9, -77.01]).addTo(map)
+    .bindPopup(`外部サイト『No Change No Life I/O』にPage遷移します🔥 <br> ${buttonTag}`)
+    .on('click', () => { console.log('アメリカ合衆国、万歳🔥'); });
+
+    const germany = L.marker([52.5, 13.4]).addTo(map)
+    .bindPopup(`外部サイト『No Change No Life I/O』にPage遷移します🔥 <br> ${buttonTag}`)
+    .on('click', () => { console.log('ドイツの科学は、世界一ぃぃぃぃぃぃぃぃ🔥'); });
+
+
+    // [ 参考・引用 ]
+    // 1. Leaflet マーカークリックイベント
+    // https://www.achiachi.net/blog/leaflet/clickevent
+
+
+</script>
+
+</html>
